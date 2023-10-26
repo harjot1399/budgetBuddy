@@ -1,3 +1,5 @@
+import 'package:budgetbuddy/addExpense.dart';
+import 'package:budgetbuddy/settingsPage.dart';
 import 'package:budgetbuddy/startPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,9 @@ class _HomePageState extends State<HomePage> {
   int cIndex = 0;
 
   final List<Widget> screens = [
-    const StartPage()
+    const StartPage(),
+    const AddExpense(),
+    const SettingsPage()
   ];
   @override
   Widget build(BuildContext context) {
