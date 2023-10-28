@@ -51,7 +51,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           Text("Harjot Singh", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
                           SizedBox(height: 8.0,),
                           Text("Edit your Profile", style: TextStyle(fontSize: 20.0), )
-
                         ],
                       ),
                     ),

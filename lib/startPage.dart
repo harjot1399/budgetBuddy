@@ -1,4 +1,4 @@
-
+import 'package:budgetbuddy/showStatsUI.dart';
 import 'package:flutter/material.dart';
 
 class StartPage extends StatefulWidget {
@@ -70,7 +70,7 @@ class _StartPageState extends State<StartPage> {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Card(
               elevation: 4,
-              color: const Color(0xFFd4d4d9),
+              color: const Color(0xFF96c560),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
@@ -101,7 +101,7 @@ class _StartPageState extends State<StartPage> {
                   height: 100, // Set a fixed height
                   child: Card(
                     elevation: 4,
-                    color: const Color(0xFFd4d4d9),
+                    color: const Color(0xFF96c560),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
@@ -128,7 +128,7 @@ class _StartPageState extends State<StartPage> {
                 height: 100, // Set a fixed height
                 child: Card(
                   elevation: 4,
-                  color: const Color(0xFFd4d4d9),
+                  color: const Color(0xFF96c560),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -158,7 +158,7 @@ class _StartPageState extends State<StartPage> {
               height:450,
               child: Card(
                 elevation: 4,
-                color: const Color(0xFFd4d4d9),
+                color: const Color(0xFF96c560),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
@@ -217,242 +217,49 @@ class _StartPageState extends State<StartPage> {
 
                         ],
                       ),
-                      SizedBox(height: 40.0,),
+                      const SizedBox(height: 40.0,),
                       if (showStats)
-                        Column(
+                        const Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  width: 150, // Set a fixed width
-                                  height: 140, // Set a fixed height
-                                  child: Card(
-                                    elevation: 4,
-                                    color: const Color(0xFF96c560),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Goals',
-                                            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text('10000 Dollars'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10.0,),
-                                SizedBox(
-                                  width: 150, // Set a fixed width
-                                  height: 140, // Set a fixed height
-                                  child: Card(
-                                    elevation: 4,
-                                    color: const Color(0xFF96c560),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Money Saved',
-                                            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text('10000 Dollars'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                showStatsWidget(text: 'Goals', icon: Icons.outlined_flag, subText: '6'),
+                                SizedBox(width: 10.0,),
+                                showStatsWidget(text: 'Transcations', icon: Icons.payment, subText: '26')
+
                               ],
                             ),
                             SizedBox(height: 30.0,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  width: 150, // Set a fixed width
-                                  height: 140, // Set a fixed height
-                                  child: Card(
-                                    elevation: 4,
-                                    color: const Color(0xFF96c560),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Transcations',
-                                            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text('10000 Dollars'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10.0,),
-                                SizedBox(
-                                  width: 150, // Set a fixed width
-                                  height: 140, // Set a fixed height
-                                  child: Card(
-                                    elevation: 4,
-                                    color: const Color(0xFF96c560),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Bills',
-                                            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text('10000 Dollars'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                showStatsWidget(text: 'Money Saved', icon: Icons.attach_money, subText: '20000 Dollars'),
+                                SizedBox(width: 10.0,),
+                                showStatsWidget(text: 'Budgets', icon: Icons.money, subText: '4'),
                               ],
                             ),
                           ],
                         )
                       else
-                        Column(
+                        const Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  width: 150, // Set a fixed width
-                                  height: 140, // Set a fixed height
-                                  child: Card(
-                                    elevation: 4,
-                                    color: const Color(0xFF96c560),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Electricity',
-                                            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text('10000 Dollars'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10.0,),
-                                SizedBox(
-                                  width: 150, // Set a fixed width
-                                  height: 140, // Set a fixed height
-                                  child: Card(
-                                    elevation: 4,
-                                    color: const Color(0xFF96c560),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Transportation',
-                                            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text('10000 Dollars'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                showStatsWidget(text: 'Electricity', icon: Icons.electrical_services, subText: '5'),
+                                SizedBox(width: 10.0,),
+                                showStatsWidget(text: 'Transportation', icon: Icons.emoji_transportation, subText: '10'),
                               ],
                             ),
                             SizedBox(height: 30.0,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  width: 150, // Set a fixed width
-                                  height: 140, // Set a fixed height
-                                  child: Card(
-                                    elevation: 4,
-                                    color: const Color(0xFF96c560),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Grocery',
-                                            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text('10000 Dollars'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10.0,),
-                                SizedBox(
-                                  width: 150, // Set a fixed width
-                                  height: 140, // Set a fixed height
-                                  child: Card(
-                                    elevation: 4,
-                                    color: const Color(0xFF96c560),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Shopping',
-                                            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text('10000 Dollars'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                showStatsWidget(text: 'Grocery', icon: Icons.local_grocery_store, subText: '5'),
+                                SizedBox(width: 10.0,),
+                                showStatsWidget(text: 'Shopping', icon: Icons.shopping_bag, subText: '5'),
                               ],
-
-
                             ),
                           ],
                         )
@@ -468,15 +275,4 @@ class _StartPageState extends State<StartPage> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
