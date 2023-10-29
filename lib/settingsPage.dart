@@ -99,6 +99,28 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
           ),
+          const SizedBox(height: 50.0,),
+          SizedBox(
+            height: 260,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: const Column(
+                  children: [
+                    SectionWidget(text: "Account Settings", icon: Icons.person),
+                    Divider(),
+                    SectionWidget(text: "Security", icon: Icons.security),
+                    Divider(),
+                    SectionWidget(text: "Notifications", icon: Icons.notifications),
+                  ],
+                )
+              ),
+            ),
+          ),
           const SizedBox(height: 40.0,),
           Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 15.0),
