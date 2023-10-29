@@ -1,3 +1,4 @@
+import 'package:budgetbuddy/editProfile.dart';
 import 'package:budgetbuddy/loginPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -27,42 +28,74 @@ class _SettingsPageState extends State<SettingsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: SizedBox(
               height: 100.0,
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const editProfile(),
+                    ),
+                  );
+
+                },
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: const Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0),
+                        child: CircleAvatar(
+                          radius: 35,
+                          backgroundColor: Colors.pink,
+                        ),
+
+                      ),
+                      SizedBox(width: 25.0,),
+                      Padding(
+                        padding: EdgeInsets.only(top: 18.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Harjot Singh", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                            SizedBox(height: 8.0,),
+                            Text("Edit your Profile", style: TextStyle(fontSize: 20.0), )
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                        child: Icon(Icons.arrow_forward_ios),
+                      )
+                    ],
+                  ),
+
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 50.0,),
+          SizedBox(
+            height: 260,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Card(
-                elevation: 4,
+                elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: const Row(
+                child: const Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.0),
-                      child: CircleAvatar(
-                        radius: 35,
-                        backgroundColor: Colors.pink,
-                      ),
-
-                    ),
-                    SizedBox(width: 25.0,),
-                    Padding(
-                      padding: EdgeInsets.only(top: 18.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Harjot Singh", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-                          SizedBox(height: 8.0,),
-                          Text("Edit your Profile", style: TextStyle(fontSize: 20.0), )
-
-                        ],
-                      ),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: EdgeInsets.only(right: 10.0),
-                      child: Icon(Icons.arrow_forward_ios),
-                    )
+                    SectionWidget(text: "Account Settings", icon: Icons.person),
+                    Divider(color: Colors.black,),
+                    SectionWidget(text: "Security", icon: Icons.security),
+                    Divider(color: Colors.black,),
+                    SectionWidget(text: "Notifications", icon: Icons.notifications),
                   ],
-                ),
-
+                )
               ),
             ),
           ),
