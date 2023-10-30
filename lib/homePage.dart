@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int intialIndex;
+  const HomePage({super.key, required this.intialIndex});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -13,6 +14,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int cIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Set the initial tab index based on the provided initialIndex
+    cIndex = widget.intialIndex;
+  }
+
 
   final List<Widget> screens = [
     const StartPage(),
@@ -66,3 +75,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+

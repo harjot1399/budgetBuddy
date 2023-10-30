@@ -1,3 +1,4 @@
+import 'package:budgetbuddy/homePage.dart';
 import 'package:budgetbuddy/settingsPage.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _editProfileState extends State<editProfile> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SettingsPage(),
+                        builder: (context) => const HomePage(intialIndex: 2),
                       ),
                     );
 
@@ -41,7 +42,7 @@ class _editProfileState extends State<editProfile> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SettingsPage(),
+                        builder: (context) => const HomePage(intialIndex: 2),
                       ),
                     );
 
