@@ -1,6 +1,7 @@
-import 'package:budgetbuddy/add%20Transcation.dart';
+
 import 'package:budgetbuddy/addBudget.dart';
 import 'package:budgetbuddy/addCategory.dart';
+import 'package:budgetbuddy/addTranscation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "891457659005",
+    "project_id": "budgetbuddy-31cae",
+    "storage_bucket": "budgetbuddy-31cae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891457659005:android:6a50e18da26f1114f71114",
+        "android_client_info": {
+          "package_name": "com.example.spendsense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2rR-qOKQeyGhP3KsOOzU4g0OtFLuA8dQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

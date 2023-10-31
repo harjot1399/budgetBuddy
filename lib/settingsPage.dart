@@ -16,12 +16,13 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF9F6EE),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Padding(
             padding: EdgeInsets.only(top: 10.0, left: 20.0),
-            child: Text('Settings', style: TextStyle(fontSize: 40.0),),
+            child: Text('Settings', style: TextStyle(fontSize: 40.0, color: Color(0xFFf89361),),),
           ),
           const SizedBox(height: 40.0,),
           Padding(
@@ -39,6 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 },
                 child: Card(
+                  color: const Color(0xFF036661),
                   elevation: 4,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
@@ -59,9 +61,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Harjot Singh", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                            Text("Harjot Singh", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: Color(0xFFF9F6EE)),),
                             SizedBox(height: 8.0,),
-                            Text("Edit your Profile", style: TextStyle(fontSize: 20.0), )
+                            Text("Edit your Profile", style: TextStyle(fontSize: 20.0, color: Color(0xFFF9F6EE)), )
                           ],
                         ),
                       ),
@@ -83,6 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Card(
+                color: Color(0xFF036661),
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -93,28 +96,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     Divider(color: Colors.black,),
                     SectionWidget(text: "Security", icon: Icons.security),
                     Divider(color: Colors.black,),
-                    SectionWidget(text: "Notifications", icon: Icons.notifications),
-                  ],
-                )
-              ),
-            ),
-          ),
-          const SizedBox(height: 50.0,),
-          SizedBox(
-            height: 260,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: const Column(
-                  children: [
-                    SectionWidget(text: "Account Settings", icon: Icons.person),
-                    Divider(),
-                    SectionWidget(text: "Security", icon: Icons.security),
-                    Divider(),
                     SectionWidget(text: "Notifications", icon: Icons.notifications),
                   ],
                 )
@@ -134,7 +115,7 @@ class _SettingsPageState extends State<SettingsPage> {
             },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<
-                    Color>(const Color(0xFF96c560)),
+                    Color>(const Color(0xFF036661)),
                 minimumSize: MaterialStateProperty.all<Size>(
                   const Size(370.0, 60.0),
                 ),
@@ -186,17 +167,17 @@ class SectionWidget extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
-                  color: const Color(0xFF96c560),
-                  child: Icon(icon),
+                  color: const Color(0xFFf89361),
+                  child: Icon(icon, color: Color(0xFFF9F6EE),),
                 ),
               ),
             ),
             const SizedBox(width: 30,),
-            Text(text, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+            Text(text, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xFFF9F6EE)),),
             const Spacer(),
             const Padding(
               padding: EdgeInsets.only(right: 10.0,top: 10.0),
-              child: Icon(Icons.arrow_forward_ios,size: 20.0,color: Colors.grey,),
+              child: Icon(Icons.arrow_forward_ios,size: 20.0,color: Color(0xFFF9F6EE),),
             )
           ],
         ),
