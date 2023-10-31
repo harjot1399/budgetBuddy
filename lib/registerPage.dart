@@ -1,7 +1,10 @@
 import 'package:budgetbuddy/loginPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -11,15 +14,88 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+
+
+  Future<void> regularSignUp() async {
+    try {
+      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      final user = userCredential.user!;
+      await FirebaseFirestore.instance.collection('Users').doc(
+          usernameController.text).set({
+        'Uid': user.uid,
+        'Name': nameController.text,
+      }).then((value) {
+        //signUp successful
+        FirebaseAuth.instance.currentUser!.updateDisplayName(
+            nameController.text);
+        if (context.mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const loginPage(),
+            ),
+          );
+        }
+      }).catchError((e) {
+        if (kDebugMode) {
+          print(e);
+        }
+      });
+    } on FirebaseAuthException catch (e) {
+
+      if (e.code == 'email-already-in-use') {
+        print(e);
+      } else if (e.code == 'invalid-email') {
+        // Fluttertoast.showToast(
+        //   msg: "The email address is invalid.",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   backgroundColor: Colors.white,
+        //   textColor: Colors.black,
+        // );
+        print(e);
+      } else {
+        // Fluttertoast.showToast(
+        //   msg: "An error occurred. Please try again later.",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   backgroundColor: Colors.white,
+        //   textColor: Colors.black,
+        // );
+        print(e);
+      }
+    } catch (e) {
+      // Fluttertoast.showToast(
+      //   msg: "An error occurred. Please try again later.",
+      //   toastLength: Toast.LENGTH_SHORT,
+      //   gravity: ToastGravity.BOTTOM,
+      //   backgroundColor: Colors.white,
+      //   textColor: Colors.black,
+      // );
+      print(e);
+    }
+      // TODO
+  }
+
+
+
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF96c560),
+      backgroundColor: const Color(0xFF114945),
       body: Column(
         children: [
           Expanded(
             flex: 2,
             child: Container(
-              color: const Color(0xFF96c560),
+              color: const Color(0xFF114945),
               child: const Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -28,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Text(
                           'Budget Buddy',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xFFF9F6EE),
                               fontSize: 40.0,
                               fontWeight: FontWeight.bold
                           ),
@@ -38,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Text(
                           'Track and manage your budget with ease!',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xFFF9F6EE),
                               fontSize: 18.0
                           ),
                         ),
@@ -52,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Expanded(flex: 8,
             child: Container(
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: Color(0xFFF9F6EE),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40.0),
                   topRight: Radius.circular(40.0),
@@ -78,10 +154,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontSize: 16.0),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: TextField(
-                        decoration: InputDecoration(
+                        controller: nameController,
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                                 Radius.circular(10.0)),
@@ -98,10 +175,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontSize: 16.0),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: TextField(
-                        decoration: InputDecoration(
+                        controller: usernameController,
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                                 Radius.circular(10.0)),
@@ -118,10 +196,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontSize: 16.0),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: TextField(
-                        decoration: InputDecoration(
+                        controller: emailController,
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                                 Radius.circular(10.0)),
@@ -142,11 +221,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontSize: 16.0),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: TextField(
+                        controller: passwordController,
                         obscuringCharacter: '*',
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                                 Radius.circular(10.0)),
@@ -166,11 +246,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontSize: 16.0),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: TextField(
+                        controller: confirmPasswordController,
                         obscuringCharacter: '*',
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                                 Radius.circular(10.0)),
@@ -186,11 +267,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: ElevatedButton(onPressed: () {
-
-                      },
+                        regularSignUp();
+                        },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF96c560)),
+                              const Color(0xff0114945)),
                           minimumSize: MaterialStateProperty.all<Size>(
                             const Size(200.0, 60.0),
                           ),
@@ -203,7 +284,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ), child: const Text(
                           'Sign Up',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFFF9F6EE),
                             fontWeight: FontWeight.bold,
                             fontSize: 16.0,
                           ),
@@ -228,7 +309,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                           },
                           child: const Text('Log In', style: TextStyle(
-                              color: Color(0xFF96c560),
+                              color: Color(0xFF114945),
                               fontWeight: FontWeight.bold
                           ),)
                       ),
