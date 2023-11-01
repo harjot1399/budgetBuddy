@@ -1,6 +1,8 @@
+import 'package:budgetbuddy/profileProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'loginPage.dart';
 Future<void> main() async {
@@ -9,12 +11,17 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(budgetBuddy());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => ProfileProvider()),
+    ],
+    child: budgetBuddy()
+  )
+  );
 }
 
 class budgetBuddy extends StatelessWidget {
 
-  // This widget is the root of your application.
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

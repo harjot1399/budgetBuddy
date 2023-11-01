@@ -34,8 +34,8 @@ class addTranscation extends StatelessWidget {
           ),
           const SizedBox(height: 30,),
           SizedBox(
-            height: 400,
-            width: 350,
+            height: 450,
+            width: 380,
             
             child: Card(
               color: const Color(0xFF114945),
@@ -46,14 +46,16 @@ class addTranscation extends StatelessWidget {
               child: const Column(
                 children: [
                   //Text('Hello'),
-                  commonRowUI(vary: TextField(), varyIcon: Icons.money, text: 'Expense'),
-                  SizedBox(height: 15.0,),
+                  commonRowUI(vary: TextField(
+
+                  ), varyIcon: Icons.money, text: 'Expense'),
+                  SizedBox(height: 20.0,),
                   commonRowUI(vary: TextField(), varyIcon: Icons.category, text: 'Category'),
-                  SizedBox(height: 15.0,),
+                  SizedBox(height: 20.0,),
                   commonRowUI(vary: TextField(), varyIcon: Icons.payment, text: 'Budget'),
-                  SizedBox(height: 15.0,),
+                  SizedBox(height: 20.0,),
                   commonRowUI(vary: TextField(), varyIcon: Icons.edit_calendar, text: 'Date'),
-                  SizedBox(height: 15.0,),
+                  SizedBox(height: 20.0,),
                   commonRowUI(vary: TextField(), varyIcon: Icons.repeat, text: 'Repeat'),
 
                 ],
