@@ -19,6 +19,8 @@ class loginPage extends StatefulWidget {
 class _loginPageState extends State<loginPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool rememberMe = false;
+  bool isPasswordVisible = false;
 
   void authenticateUserIn() async{
     try {
@@ -127,22 +129,54 @@ class _loginPageState extends State<loginPage> {
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: TextField(
                 controller: passwordController,
-                decoration: const InputDecoration(
+                obscureText: !isPasswordVisible,
+                obscuringCharacter: '*',
+                decoration: InputDecoration(
 
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                         Radius.circular(10.0)),
                     borderSide: BorderSide(color: Colors.grey),
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.black,
                   ),
-                  prefixIcon: Icon(Icons.key),
+                  prefixIcon: const Icon(Icons.key),
                   prefixIconColor: Colors.black,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.black,
+                    ), onPressed: () {
+                    setState(() {
+                      isPasswordVisible = !isPasswordVisible;
+                    });
+                  },
+                  ),
+
                 ),
               ),
             ),
-            SizedBox(height: 40,),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    value: rememberMe,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        rememberMe = newValue ?? false;
+                      });
+                    },
+                  ),
+                  const Text('Remember Me'),
+                ],
+              ),
+            ),
+            SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0),
               child: ElevatedButton(onPressed: () {

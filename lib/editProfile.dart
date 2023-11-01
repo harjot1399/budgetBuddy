@@ -1,6 +1,8 @@
 import 'package:budgetbuddy/homePage.dart';
+import 'package:budgetbuddy/profileProvider.dart';
 import 'package:budgetbuddy/settingsPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class editProfile extends StatefulWidget {
   const editProfile({super.key});
@@ -10,8 +12,14 @@ class editProfile extends StatefulWidget {
 }
 
 class _editProfileState extends State<editProfile> {
+  final TextEditingController editedUserName = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
+    final pProvider = Provider.of<ProfileProvider>(context);
+    String newUserName = editedUserName.text;
+
     return Scaffold(
       body: Column(
         children: [
@@ -86,14 +94,30 @@ class _editProfileState extends State<editProfile> {
             ],
           ),
           const SizedBox(height: 50.0,),
-          const Row(
+          Row(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 10.0),
                 child: Text('Username :', style: TextStyle(fontSize: 20.0),),
               ),
-              SizedBox(width: 10.0,),
-              SizedBox(width: 270, child: TextField())
+              const SizedBox(width: 10.0,),
+              SizedBox(width: 270, child: TextField(
+                controller: editedUserName,
+                decoration: InputDecoration(
+                  labelText: pProvider.username
+                ),
+                onChanged: (user){
+                  if (user.isEmpty) {
+                    // If the 'TextField' is empty, you can update the provider with the old username
+                    pProvider.setUsername(pProvider.username);
+                  } else {
+                    // If the 'TextField' is not empty, update the provider with the new username
+                    pProvider.setUsername(user);
+                  }
+
+                },
+
+              ))
             ],
           )
 

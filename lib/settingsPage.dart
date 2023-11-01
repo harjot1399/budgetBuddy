@@ -1,9 +1,11 @@
 import 'package:budgetbuddy/editProfile.dart';
 import 'package:budgetbuddy/loginPage.dart';
+import 'package:budgetbuddy/profileProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -13,8 +15,14 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+
   @override
   Widget build(BuildContext context) {
+    final pProvider = Provider.of<ProfileProvider>(context);
+    final username = pProvider.username;
+    final name = pProvider.name;
+
+
     return Scaffold(
       backgroundColor: const Color(0xFFF9F6EE),
       body: Column(
@@ -45,9 +53,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(left: 10.0),
                         child: CircleAvatar(
                           radius: 35,
@@ -61,9 +69,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Harjot Singh", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: Color(0xFFF9F6EE)),),
-                            SizedBox(height: 8.0,),
-                            Text("Edit your Profile", style: TextStyle(fontSize: 20.0, color: Color(0xFFF9F6EE)), )
+                            Text(name, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: Color(0xFFF9F6EE)),),
+                            const SizedBox(height: 8.0,),
+                            Text(username, style: TextStyle(fontSize: 20.0, color: Color(0xFFF9F6EE)), )
                           ],
                         ),
                       ),
