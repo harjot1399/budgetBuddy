@@ -42,6 +42,12 @@ dependencies:
   google_sign_in: ^6.1.5
   fluttertoast: ^8.2.2
   provider: ^6.0.5
+  camera: ^0.10.5+2
+  image_picker: ^0.8.9
+  flutter_secure_storage: ^8.0.0
+  photo_manager: ^2.6.0
+  intl: ^0.18.1
+
 
 dev_dependencies:
   flutter_test:

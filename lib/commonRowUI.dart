@@ -12,9 +12,9 @@ class commonRowUI extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          Icon(varyIcon, color: const Color(0xFFf89361),),
+          Icon(varyIcon, color: const Color(0xFFf89361), size: 35,),
           const SizedBox(width: 10,),
-          Text(text, style: const TextStyle(color: Color(0xFFF9F6EE)),),
+          Text(text, style: const TextStyle(color: Color(0xFFF9F6EE), fontSize: 20),),
           const SizedBox(width: 10,),
           Expanded(child: vary)
 

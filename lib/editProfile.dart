@@ -1,6 +1,8 @@
+import 'dart:io';
+import 'dart:ui';
+import 'package:budgetbuddy/cameraUtil.dart';
 import 'package:budgetbuddy/homePage.dart';
 import 'package:budgetbuddy/profileProvider.dart';
-import 'package:budgetbuddy/settingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,13 +16,96 @@ class editProfile extends StatefulWidget {
 class _editProfileState extends State<editProfile> {
   final TextEditingController editedUserName = TextEditingController();
 
+  File? profileImage;
+
+  void _showCameraDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Select an option'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  // Handle "Take a Live Picture" button pressed
+                  final image = await cameraUtil.openCamera(context);
+                  setState(() {
+                    profileImage = image;
+                  });
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text('Take a Live Picture'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  // Handle "Select from Gallery" button pressed
+                  final image = await cameraUtil.openGallery(context);
+                  setState(() {
+                    profileImage = image;
+                  });
+
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text('Select from Gallery'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showImageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                  child: SizedBox(
+                    width: 300,
+                    height: 300,
+                    child: profileImage != null
+                        ? Image.file(profileImage!, fit: BoxFit.cover)
+                        : const Center(child: Text('No image selected')),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final pProvider = Provider.of<ProfileProvider>(context);
     String newUserName = editedUserName.text;
 
-    return Scaffold(
+    return SafeArea(child: Scaffold(
       body: Column(
         children: [
           Padding(
@@ -67,9 +152,18 @@ class _editProfileState extends State<editProfile> {
           const Divider(color: Colors.grey),
           Stack(
             children: [
-              const CircleAvatar(
-                maxRadius: 60,
+               GestureDetector(
+                 onTap: (){
+                   _showImageDialog(context);
+                 },
+                 child: CircleAvatar(
+                  maxRadius: 60,
+                  backgroundColor: Colors.pink,
+                  backgroundImage: profileImage != null
+                      ? MemoryImage(profileImage!.readAsBytesSync())
+                      : null,
               ),
+               ),
               Positioned.directional(
                 textDirection: Directionality.of(context),
                 end: 0,
@@ -80,6 +174,7 @@ class _editProfileState extends State<editProfile> {
                   borderRadius: BorderRadius.circular(40),
                   child: InkWell(
                     onTap: () async {
+                      _showCameraDialog(context);
 
                     },
                     radius: 50,
@@ -120,10 +215,9 @@ class _editProfileState extends State<editProfile> {
               ))
             ],
           )
-
-
         ],
       ),
+    )
     );
   }
 }
