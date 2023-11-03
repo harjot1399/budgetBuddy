@@ -29,7 +29,7 @@ class _StartPageState extends State<StartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(child: Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -91,7 +91,7 @@ class _StartPageState extends State<StartPage> {
               ),
             ),
           ),
-          SizedBox(height: 40.0,),
+          const SizedBox(height: 40.0,),
           Row(
             children: [
               Padding(
@@ -150,7 +150,7 @@ class _StartPageState extends State<StartPage> {
               ),
             ],
           ),
-          SizedBox(height: 40.0,),
+          const SizedBox(height: 40.0,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: SizedBox(
@@ -193,7 +193,7 @@ class _StartPageState extends State<StartPage> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 20.0,),
+                          const SizedBox(width: 20.0,),
                           InkWell(
                             onTap: () {
                               showCategoriesUI();
@@ -272,6 +272,7 @@ class _StartPageState extends State<StartPage> {
           ),
         ],
       ),
+    )
     );
   }
 }

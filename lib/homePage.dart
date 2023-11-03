@@ -1,7 +1,6 @@
 import 'package:budgetbuddy/addExpense.dart';
 import 'package:budgetbuddy/settingsPage.dart';
 import 'package:budgetbuddy/startPage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,9 +43,9 @@ class _HomePageState extends State<HomePage> {
             bottom: 0,
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              backgroundColor: const Color(0xFF114945),
-              selectedItemColor: Color(0xFFf89361),
-              unselectedItemColor: Color(0xFFF9F6EE),
+              backgroundColor: const Color(0xFF036661),
+              selectedItemColor: const Color(0xFFf89361),
+              unselectedItemColor: const Color(0xFFF9F6EE),
               currentIndex: cIndex,
               onTap: (int index) {
                 setState(() {

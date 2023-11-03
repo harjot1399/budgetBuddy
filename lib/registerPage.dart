@@ -1,12 +1,10 @@
 import 'package:budgetbuddy/loginPage.dart';
-import 'package:budgetbuddy/profileProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -24,9 +22,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
   Future<void> regularSignUp() async {
-    final dataProvider = Provider.of<ProfileProvider>(context, listen: false);
-    dataProvider.setUsername(usernameController.text);
-    dataProvider.setName(nameController.text);
+    // final dataProvider = Provider.of<ProfileProvider>(context, listen: false);
+    // dataProvider.setUsername(usernameController.text);
+    // dataProvider.setName(nameController.text);
     try {
       final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
@@ -34,7 +32,8 @@ class _RegisterPageState extends State<RegisterPage> {
       );
       final user = userCredential.user!;
       await FirebaseFirestore.instance.collection('Users').doc(
-          user.uid).set({
+          emailController.text).set({
+        'Uid' : user.uid,
         'Name': nameController.text,
         'Username': usernameController.text
       }).then((value) {
@@ -92,6 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF114945),

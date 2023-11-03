@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'firestoreMethods.dart';
 import 'googleLogo.dart';
 
 
@@ -17,15 +17,19 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
   bool isPasswordVisible = false;
 
+
+
+
   void authenticateUserIn() async{
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: usernameController.text,
+          email: emailcontroller.text,
           password: passwordController.text
       );
 
@@ -97,7 +101,7 @@ class _loginPageState extends State<loginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextField(
-                controller: usernameController,
+                controller: emailcontroller,
                 decoration: const InputDecoration(
 
                   border: OutlineInputBorder(
@@ -126,7 +130,7 @@ class _loginPageState extends State<loginPage> {
             ),
             const SizedBox(height: 5.0,),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextField(
                 controller: passwordController,
                 obscureText: !isPasswordVisible,
@@ -176,10 +180,11 @@ class _loginPageState extends State<loginPage> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0),
               child: ElevatedButton(onPressed: () {
+                getDataFromEmail(emailcontroller.text, context);
                 authenticateUserIn();
               },
                   style: ButtonStyle(
@@ -224,7 +229,7 @@ class _loginPageState extends State<loginPage> {
                 ],
               ),
             ),
-            SizedBox(height: 40.0,),
+            const SizedBox(height: 40.0,),
             Row(
               children: [
                 Padding(
@@ -240,7 +245,6 @@ class _loginPageState extends State<loginPage> {
                   padding: const EdgeInsets.only(left: 120),
                   child: GestureDetector(
                     onTap: () {
-                        print('Icon clicked');
 
                     },
                     child: const Icon(
@@ -284,4 +288,3 @@ class _loginPageState extends State<loginPage> {
     );
   }
 }
-

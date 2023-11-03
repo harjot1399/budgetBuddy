@@ -2,19 +2,17 @@
 import 'package:budgetbuddy/addBudget.dart';
 import 'package:budgetbuddy/addCategory.dart';
 import 'package:budgetbuddy/addTranscation.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'loginPage.dart';
 
 class AddExpense extends StatelessWidget {
   const AddExpense({super.key});
 
-
   @override
   Widget build(BuildContext context) {
 
-    return const Scaffold(
+    return const SafeArea(child: Scaffold(
+      backgroundColor: Color(0xFFF9F6EE),
 
       body: Column(
         children: [
@@ -36,6 +34,7 @@ class AddExpense extends StatelessWidget {
         ],
       ),
 
+    )
     );
   }
 }
@@ -60,7 +59,7 @@ class expenseAdd extends StatelessWidget {
       },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<
-              Color>(const Color(0xFF96c560)),
+              Color>(const Color(0xFF036661)),
           minimumSize: MaterialStateProperty.all<Size>(
             const Size(370.0, 60.0),
           ),
@@ -77,7 +76,7 @@ class expenseAdd extends StatelessWidget {
             const Icon(Icons.add_box_rounded),
             const SizedBox(width: 10,),
             Text(title, style: const TextStyle(
-              color: Colors.white,
+              color: Color(0xFFF9F6EE),
               fontSize: 20.0,
             )),
           ],
