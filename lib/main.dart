@@ -1,5 +1,6 @@
 import 'package:budgetbuddy/authPage.dart';
 import 'package:budgetbuddy/profileProvider.dart';
+import 'package:budgetbuddy/transcationProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => ProfileProvider()),
+      ChangeNotifierProvider(create: (context) => TranscationProvider() )
     ],
     child: const budgetBuddy()
   )

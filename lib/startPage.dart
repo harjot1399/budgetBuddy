@@ -30,6 +30,7 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
+      backgroundColor: Color(0xFFF9F6EE),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -155,7 +156,7 @@ class _StartPageState extends State<StartPage> {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: SizedBox(
               width: 200,
-              height:450,
+              height:410,
               child: Card(
                 elevation: 4,
                 color: const Color(0xFF96c560),
@@ -175,9 +176,7 @@ class _StartPageState extends State<StartPage> {
                           InkWell(
                             onTap: () {
                               showStatsUI();
-
-                              // Add your button 1 action here
-                            },
+                              },
                             child: Container(
                               padding: const EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
@@ -217,7 +216,7 @@ class _StartPageState extends State<StartPage> {
 
                         ],
                       ),
-                      const SizedBox(height: 40.0,),
+                      const SizedBox(height: 20.0,),
                       if (showStats)
                         const Column(
                           children: [

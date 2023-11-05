@@ -1,4 +1,5 @@
 import 'package:budgetbuddy/addExpense.dart';
+import 'package:budgetbuddy/firestoreMethods.dart';
 import 'package:budgetbuddy/settingsPage.dart';
 import 'package:budgetbuddy/startPage.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.search, size: 30.0),
+                  icon: Icon(Icons.add_box_rounded, size: 30.0),
                   label: '',
                 ),
                 BottomNavigationBarItem(
