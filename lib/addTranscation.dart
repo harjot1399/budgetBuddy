@@ -1,6 +1,8 @@
 import 'package:budgetbuddy/firestoreMethods.dart';
+import 'package:budgetbuddy/transcationProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'commonRowUI.dart';
 import 'homePage.dart';
 
@@ -14,9 +16,20 @@ class addTranscation extends StatefulWidget {
 class _addTranscationState extends State<addTranscation> {
 
   TextEditingController moneyused = TextEditingController();
-  String selectedCategory = "Transportation";
-  String selectedBudget = "Food";
+  String selectedCategory = "Select a category";
+  String selectedBudget = "Select a budget";
   DateTime selectedDate = DateTime.now();
+  List<String> allBudgets = [];
+  List<String> allCategories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    allBudgets = Provider.of<TranscationProvider>(context, listen: false).budgets;
+    allCategories = Provider.of<TranscationProvider>(context, listen: false).categories;
+  }
+
+
   Future<void> _selectDate(BuildContext context) async {
 
 
@@ -36,6 +49,7 @@ class _addTranscationState extends State<addTranscation> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFFF9F6EE),
@@ -90,12 +104,7 @@ class _addTranscationState extends State<addTranscation> {
                             selectedCategory = newValue!;
                           });
                         },
-                        items: <String>[
-                          "Transportation",
-                          "Food",
-                          "Entertainment",
-                          // Add more budget categories here
-                        ].map((String value) {
+                        items: allCategories.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value,style: const TextStyle(fontSize: 20.0),),
@@ -110,12 +119,7 @@ class _addTranscationState extends State<addTranscation> {
                             selectedBudget = newValue!;
                           });
                         },
-                        items: <String>[
-                          "Transportation",
-                          "Food",
-                          "Entertainment",
-                          // Add more budget categories here
-                        ].map((String value) {
+                        items: allBudgets.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value,style: const TextStyle(fontSize: 20.0),),

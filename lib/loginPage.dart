@@ -1,10 +1,12 @@
 import 'package:budgetbuddy/homePage.dart';
 import 'package:budgetbuddy/registerPage.dart';
+import 'package:budgetbuddy/transcationProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 import 'firestoreMethods.dart';
 import 'googleLogo.dart';
 
@@ -22,12 +24,24 @@ class _loginPageState extends State<loginPage> {
   bool rememberMe = false;
   bool isPasswordVisible = false;
 
+  @override
+  void initState() {
+    super.initState();
+
+    budgetsInDB(context);
+    categoriesInDB(context);
+
+
+    // Set the initial tab index based on the provided initialIndex
+  }
 
 
 
   void authenticateUserIn() async{
 
     try {
+      final listProvider = Provider.of<TranscationProvider>(context, listen: false);
+      print(listProvider.budgets);
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailcontroller.text,
           password: passwordController.text

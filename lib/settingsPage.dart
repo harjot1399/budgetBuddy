@@ -1,6 +1,7 @@
 import 'package:budgetbuddy/editProfile.dart';
 import 'package:budgetbuddy/loginPage.dart';
 import 'package:budgetbuddy/profileProvider.dart';
+import 'package:budgetbuddy/transcationProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,15 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  List <String> b = ['Select a budget'];
+  List <String> c = ['Select a category'];
   Future<void> signOutUser() async {
     try {
+      final listProvider = Provider.of<TranscationProvider>(context, listen: false);
+      listProvider.clearBudgets(b);
+      listProvider.clearCategories(c);
+      print(listProvider.budgets);
+
       await FirebaseAuth.instance.signOut();
       // After signing out, you can navigate to a login or home page.
       // For example, navigate to the login page:
