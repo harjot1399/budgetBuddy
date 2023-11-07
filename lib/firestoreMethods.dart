@@ -3,6 +3,7 @@ import 'package:budgetbuddy/profileProvider.dart';
 import 'package:budgetbuddy/transcationProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,10 +39,17 @@ Future <void> addTranscationToDB (String expense, String budget, String category
       'Date': dateTimestamp,
     });
     final String documentID = documentRef.id;
+    final Map<String, dynamic> transactionUpdate = {
+      'Transcations.$documentID': expense, // Construct the map with the transaction ID as key and expense as value
+    };
     final DocumentReference budgetRef = store.collection('Users').doc(dataProvider.email).collection('Budgets').doc(budget);
+    await budgetRef.update(transactionUpdate).catchError((error) {
+      if (kDebugMode) {
+        print('Error updating budget with transaction data: $error');
+      }
+    });
     try {
       budgetRef.update({
-        'Transcations' : FieldValue.arrayUnion([documentID]),
         'Categories' : FieldValue.arrayUnion([category])
 
       });
@@ -75,16 +83,18 @@ Future <void> addTranscationToDB (String expense, String budget, String category
   }
 }
 
-Future <void> addBudgeToDB (String name, String expense,BuildContext context, List<String> transcations, List<String> categorys)async {
+Future <void> addBudgeToDB (String name, String expense,BuildContext context, Map<String, dynamic> transcations, List<String> categorys)async {
   try {
     final dataProvider = Provider.of<ProfileProvider>(context, listen: false);
     final CollectionReference budgetRef = store.collection('Users').doc(dataProvider.email).collection('Budgets');
+    final listProvider = Provider.of<TranscationProvider>(context, listen: false);
 
     await budgetRef.doc(name).set({
       'Expense': expense,
       'Transcations': transcations,
       'Categories' : categorys,
     });
+    listProvider.addToBudgets(name);
     if (context.mounted) {
       Navigator.pushReplacement(
         context,
@@ -105,6 +115,7 @@ Future<void> addCategorytoDB (String icon, String name, String color, BuildConte
   try {
     final dataProvider = Provider.of<ProfileProvider>(context, listen: false);
     final CollectionReference budgetRef = store.collection('Users').doc(dataProvider.email).collection('Category');
+    final listProvider = Provider.of<TranscationProvider>(context, listen: false);
 
     await budgetRef.doc(name).set({
       'Icon': icon,
@@ -112,6 +123,7 @@ Future<void> addCategorytoDB (String icon, String name, String color, BuildConte
       'Transcations' : transcations
 
     });
+    listProvider.addToCategories(name);
     if (context.mounted) {
       Navigator.pushReplacement(
         context,
@@ -128,18 +140,23 @@ Future<void> addCategorytoDB (String icon, String name, String color, BuildConte
 }
 
 
-Future<void> budgetsInDB(BuildContext context)  async {
+Future<void> budgetsInDB(BuildContext context) async {
   final dataProvider = Provider.of<ProfileProvider>(context, listen: false);
   final listProvider = Provider.of<TranscationProvider>(context, listen: false);
   final CollectionReference budgetRef = store.collection('Users').doc(dataProvider.email).collection('Budgets');
 
   try {
     final querySnapshot = await budgetRef.get();
-    for (var doc in querySnapshot.docs) {
-      listProvider.addToBudgets(doc.id);
+    if (querySnapshot.docs.isEmpty) {
+      print('No budgets found in the database.');
+    } else {
+      for (var doc in querySnapshot.docs) {
+        listProvider.addToBudgets(doc.id);
+      }
     }
   } catch (e) {
-    print("Error fetching budgets: $e");// Return an empty list in case of an error
+    print("Error fetching budgets: $e");
+    throw e; // Rethrow the error to be caught by the FutureBuilder.
   }
 }
 
@@ -155,6 +172,89 @@ Future<void> categoriesInDB(BuildContext context)  async {
     }
   } catch (e) {
     print("Error fetching budgets: $e");// Return an empty list in case of an error
+  }
+}
+
+
+Future<Map<String, dynamic>> fetchBudgetData(BuildContext context, String budget) async {
+  final dataProvider = Provider.of<ProfileProvider>(context, listen: false);
+  final DocumentReference budgetRef = FirebaseFirestore.instance.collection('Users').doc(dataProvider.email).collection('Budgets').doc(budget);
+
+  Map<String, dynamic> budgetData = {};
+
+  try {
+    DocumentSnapshot budgetDoc = await budgetRef.get();
+    if (budgetDoc.exists) {
+      budgetData = budgetDoc.data() as Map<String, dynamic>;
+      print(budgetData);
+    } else {
+      print('Budget document does not exist.');
+    }
+  } catch (e) {
+    print('Error fetching budget data: $e');
+  }
+
+  return budgetData;
+}
+
+// Future<void> remainingBudget(BuildContext context, String budget, int expense) async {
+//   final dataProvider = Provider.of<ProfileProvider>(context, listen: false);
+//   final DocumentReference budgetRef = store.collection('Users').doc(dataProvider.email).collection('Budgets').doc(budget);
+//   // Assume this is the initial balance before subtracting expenses
+//
+//   try {
+//
+//     // Get the budget data
+//     DocumentSnapshot budgetSnapshot = await budgetRef.get();
+//     if (budgetSnapshot.exists) {
+//       Map<String, dynamic> budgetData = budgetSnapshot.data() as Map<String, dynamic>;
+//       // Parse the income as an integer if it's stored as a string in the database
+//       Map<String, dynamic> transactions = budgetData['Transcations'];
+//       for (var val in transactions.values){
+//         expense -= int.parse(val);
+//       }
+//     }
+//
+//     // Subtract each ransaction's expense from the remaining balance
+//
+//   } catch (e) {
+//     print("Error fetching budgets: $e");
+//   }
+// }
+
+
+Future<int> remainingBudget(BuildContext context, String budgetId) async {
+  final dataProvider = Provider.of<ProfileProvider>(context, listen: false);
+  final DocumentReference budgetRef = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(dataProvider.email)
+      .collection('Budgets')
+      .doc(budgetId);
+
+  try {
+    // Get the budget data
+    DocumentSnapshot budgetSnapshot = await budgetRef.get();
+    if (budgetSnapshot.exists) {
+      Map<String, dynamic> budgetData = budgetSnapshot.data() as Map<String, dynamic>;
+      // Assuming 'InitialBalance' holds the starting amount for the budget
+      int remainingBudget = int.tryParse(budgetData['Expense'].toString()) ?? 0;
+      Map<String, dynamic> transactions = budgetData['Transcations'] ?? {};
+
+      // Subtract each transaction's expense from the remaining balance
+      for (String expense in transactions.values) {
+        // Ensure the value is an integer or can be parsed as one
+        remainingBudget -= int.tryParse(expense.toString()) ?? 0;
+      }
+
+      // At this point, `remainingBudget` holds the calculated remaining budget
+      return remainingBudget;
+    } else {
+      print("Budget does not exist.");
+      return 0; // Return an appropriate value for non-existing budget
+    }
+  } catch (e) {
+    print("Error fetching budgets: $e");
+    throw Exception("Error fetching budgets"); // or return an appropriate error value
   }
 }
 

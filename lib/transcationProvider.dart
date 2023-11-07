@@ -9,12 +9,16 @@ class TranscationProvider extends ChangeNotifier{
   List<String> get ncategories => categories;
 
   void addToBudgets(String newItem) {
-    budgets.add(newItem);
+    if (!budgets.contains(newItem)) {
+      budgets.add(newItem);
+    }
     notifyListeners();
   }
 
   void addToCategories(String newItem) {
-    categories.add(newItem);
+    if (!categories.contains(newItem)) {
+      categories.add(newItem);
+    }
     notifyListeners();
   }
 
@@ -27,9 +31,4 @@ class TranscationProvider extends ChangeNotifier{
     categories = clearCategories;
     notifyListeners();
   }
-
-
-
-
-
 }
