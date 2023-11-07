@@ -12,7 +12,7 @@ class addBudget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController budgetName = TextEditingController();
     TextEditingController budgetCash = TextEditingController();
-    List <String> transcations = [];
+    Map <String, dynamic> transcations = {};
     List <String> categories = [];
     return SafeArea(
       child: Scaffold(

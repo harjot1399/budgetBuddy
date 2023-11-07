@@ -25,8 +25,7 @@ class _addTranscationState extends State<addTranscation> {
   @override
   void initState() {
     super.initState();
-    allBudgets = Provider.of<TranscationProvider>(context, listen: false).budgets;
-    allCategories = Provider.of<TranscationProvider>(context, listen: false).categories;
+
   }
 
 
@@ -49,6 +48,8 @@ class _addTranscationState extends State<addTranscation> {
 
   @override
   Widget build(BuildContext context) {
+    allBudgets = Provider.of<TranscationProvider>(context, listen: false).budgets;
+    allCategories = Provider.of<TranscationProvider>(context, listen: false).categories;
 
     return SafeArea(
       child: Scaffold(
