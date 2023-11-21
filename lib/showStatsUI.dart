@@ -5,9 +5,10 @@ class showStatsWidget extends StatelessWidget {
   final String text;
   final IconData icon;
   final String subText;
+  final VoidCallback? onTap;
 
 
-  const showStatsWidget({super.key, required this.text, required this.icon, required this.subText});
+  const showStatsWidget({super.key, required this.text, required this.icon, required this.subText, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,7 @@ class showStatsWidget extends StatelessWidget {
       width: 150, // Set a fixed width
       height: 140, // Set a fixed height
       child: InkWell(
-        onTap: (){
-
-        },
+        onTap: onTap,
         child: Card(
             elevation: 4,
             color: const Color(0xFFffffff),
