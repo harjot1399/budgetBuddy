@@ -14,6 +14,7 @@ class addBudget extends StatelessWidget {
     TextEditingController budgetCash = TextEditingController();
     Map <String, dynamic> transcations = {};
     List <String> categories = [];
+    int nTransactions = 0;
     return SafeArea(
       child: Scaffold(
           backgroundColor: const Color(0xFFF9F6EE),
@@ -72,7 +73,7 @@ class addBudget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: ElevatedButton(onPressed: () {
-                    addBudgeToDB(budgetName.text, budgetCash.text, context, transcations, categories);
+                    addBudgeToDB(budgetName.text, budgetCash.text, context, transcations, categories, nTransactions);
 
                   },
                     style: ButtonStyle(

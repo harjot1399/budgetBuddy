@@ -1,4 +1,5 @@
 import 'package:budgetbuddy/showStatsUI.dart';
+import 'package:budgetbuddy/transcationByBudget.dart';
 import 'package:budgetbuddy/transcationProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,9 @@ class _StartPageState extends State<StartPage> {
   int balance = 0;
   int spend = 0;
   List<dynamic> categories = [];
-  List<dynamic> transactions = [];
+  Map<String, dynamic> transactions = {};
+  String nTransactions = '';
+
 
   @override
   void initState() {
@@ -47,13 +50,21 @@ class _StartPageState extends State<StartPage> {
   Future<void> updateBudgetData(String budget) async {
     // Call your fetchBudgetData method and update the state with the returned data
     Map<String, dynamic> data = await fetchBudgetData(context, budget);
+    transactions = data['Transcations'];
     int b = await remainingBudget(context, budget);
+
+
     if (data.isNotEmpty) {
       setState(()  {
         selectedBudget = budget;
         expense = data['Expense'].toString();
         balance = b;
         spend = int.parse(expense) - b;
+        nTransactions = data['nTrans'].toString();
+        transactions = data['Transcations'];
+
+
+        print(transactions);
         // Make sure to convert to String if necessary
         // categories = List.from(data['Categories']); // Assuming this is a list
         // transactions = List.from(data['Transactions']); // Assuming this is a list
@@ -63,10 +74,10 @@ class _StartPageState extends State<StartPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('Expense in build: $expense');
+
 
     return SafeArea(child: Scaffold(
-      backgroundColor: Color(0xFFF9F6EE),
+      backgroundColor: const Color(0xFFF9F6EE),
       body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -262,23 +273,31 @@ class _StartPageState extends State<StartPage> {
                           ),
                           const SizedBox(height: 20.0,),
                           if (showStats)
-                            const Column(
+                            Column(
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    showStatsWidget(text: 'Goals',
+                                    const showStatsWidget(text: 'Goals',
                                         icon: Icons.outlined_flag,
                                         subText: '6'),
-                                    SizedBox(width: 10.0,),
+                                    const SizedBox(width: 10.0,),
                                     showStatsWidget(text: 'Transcations',
                                         icon: Icons.payment,
-                                        subText: '26')
+                                        subText: nTransactions, onTap: (){
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => transcationByBudget(budget: selectedBudget, transaction: transactions,),
+                                            ),
+                                          );
+
+                                        })
 
                                   ],
                                 ),
-                                SizedBox(height: 30.0,),
-                                Row(
+                                const SizedBox(height: 30.0,),
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     showStatsWidget(text: 'Money Saved',
